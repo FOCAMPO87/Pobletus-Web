@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pobletus ‒ Hongos Agroecológicos</title>
+    <!--
+      We make use of Tailwind via its CDN build.  This allows us to reuse the
+      exact same utility classes that were used in the original React/Vite
+      prototype without having to run a build pipeline.  See
+      https://tailwindcss.com/docs/installation/play-cdn for more details.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for the icons used throughout the page -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-sV6IPXFPdNz9tEWTnjRoTSesFiNUFDXL9uBebfrs4N0I1GwB+pGPNtSbkPWNhPtO+IdrO45yYwCC5XiHcYNyZA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      /*
+        A subtle, blurred background of gírgolas is applied to the entire page.
+        By targeting the body with a ::before pseudo element we ensure the
+        background sits behind all content without affecting layout.  The
+        opacity and blur values can be tweaked to taste; the current values
+        provide a light texture without overpowering the content.  If you
+        replace gray_girgola.jpg with another image, keep the aspect ratio and
+        size in mind.
+      */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('images/gray_girgola.jpg');
+        background-size: cover;
+        background-position: center;
+        /* Reduce opacity so the background does not distract from foreground content */
+        opacity: 0.15;
+        /* Apply a blur to emphasise the subtlety of the texture */
+        filter: blur(6px);
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body class="font-sans text-gray-800 antialiased">
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+      <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <!-- Logo and site title -->
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-leaf text-green-700 text-2xl"></i>
+          <div>
+            <h1 class="text-2xl font-bold text-green-800">Pobletus</h1>
+            <p class="text-xs text-green-600">Hongos Agroecológicos</p>
+          </div>
+        </div>
+        <!-- Desktop navigation links -->
+        <div class="hidden md:flex gap-6">
+          <a href="#inicio" class="text-gray-700 hover:text-green-700 transition-colors">Inicio</a>
+          <a href="#productos" class="text-gray-700 hover:text-green-700 transition-colors">Productos</a>
+          <a href="#servicios" class="text-gray-700 hover:text-green-700 transition-colors">Servicios</a>
+          <a href="#nosotros" class="text-gray-700 hover:text-green-700 transition-colors">Nosotros</a>
+          <a href="#contacto" class="text-gray-700 hover:text-green-700 transition-colors">Contacto</a>
+        </div>
+        <!-- Call to action button -->
+        <a href="#contacto" class="hidden sm:inline-block bg-green-700 hover:bg-green-800 text-white font-medium px-5 py-2 rounded-lg transition-colors">
+          Contáctanos
+        </a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Gradient overlay to soften the background image -->
+      <div class="absolute inset-0 bg-gradient-to-br from-green-900/30 to-amber-900/30"></div>
+      <div class="container mx-auto px-4 relative z-10 text-center">
+        <div class="animate-fade-in">
+          <i class="fa-solid fa-seedling text-green-700 text-6xl mx-auto mb-6"></i>
+          <h2 class="text-5xl md:text-7xl font-bold text-green-900 mb-6">Pobletus</h2>
+          <p class="text-2xl md:text-3xl text-green-700 mb-4 font-semibold">Hongos Agroecológicos</p>
+          <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
+            Del campo a tu mesa, con conciencia y sabor. Cultivamos hongos frescos y saludables en Poblet, La Plata, valorizando subproductos locales.
+          </p>
+          <div class="flex gap-4 justify-center flex-wrap">
+            <a href="#productos" class="bg-green-700 hover:bg-green-800 text-white font-semibold text-lg px-8 py-4 rounded-lg transition-colors">Ver Productos</a>
+            <a href="#servicios" class="border border-green-700 text-green-700 hover:bg-green-50 font-semibold text-lg px-8 py-4 rounded-lg transition-colors">Nuestros Servicios</a>
+          </div>
+        </div>
+        <div class="mt-12 animate-bounce">
+          <i class="fa-solid fa-chevron-down text-green-700 text-2xl"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Propuesta de Valor -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h3 class="text-4xl font-bold text-green-900 mb-4">Nuestra Propuesta de Valor</h3>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+            Transformamos el chipeado de la poda del monte de nueces de pecán en el sustrato principal para nuestros hongos.
+            Una solución innovadora que reduce el impacto ambiental y garantiza trazabilidad total.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Sostenibilidad -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-leaf text-green-700 text-4xl mb-4"></i>
+              <h4 class="text-green-900 font-bold mb-2">Sostenibilidad</h4>
+              <p class="text-gray-700 text-center">Valorizamos subproductos de la actividad pecanera local, reduciendo residuos y el impacto ambiental.</p>
+            </div>
+          </div>
+          <!-- Trazabilidad Total -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-award text-green-700 text-4xl mb-4"></i>
+              <h4 class="text-green-900 font-bold mb-2">Trazabilidad Total</h4>
+              <p class="text-gray-700 text-center">Desde el origen de la materia prima hasta la cosecha y el empaque, controlamos cada etapa del proceso.</p>
+            </div>
+          </div>
+          <!-- Identidad Local -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-heart text-green-700 text-4xl mb-4"></i>
+              <h4 class="text-green-900 font-bold mb-2">Identidad Local</h4>
+              <p class="text-gray-700 text-center">Producimos alimentos saludables con fuerte impronta local, para consumidores conscientes de la región.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Productos -->
+    <section id="productos" class="py-20 bg-gradient-to-br from-green-50 to-amber-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h3 class="text-4xl font-bold text-green-900 mb-4">Nuestros Productos</h3>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+            Hongos frescos y conservas artesanales, cultivados con amor y respeto por la naturaleza.
+          </p>
+        </div>
+        <!-- Gírgolas Frescas -->
+        <div class="mb-16">
+          <h4 class="text-3xl font-bold text-green-800 mb-8 text-center">Gírgolas Frescas</h4>
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- Gírgolas Grises -->
+            <div class="border border-green-200 rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div class="h-64 overflow-hidden">
+                <img src="images/gray_girgola.jpg" alt="Gírgolas Grises" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+              </div>
+              <div class="p-6">
+                <h5 class="text-green-900 font-bold mb-1">Gírgolas Grises</h5>
+                <p class="text-sm text-green-600 mb-2 italic">Pleurotus ostreatus</p>
+                <p class="text-gray-700">Clásicas y versátiles, ideales para cualquier preparación culinaria. Sabor delicado y textura suave.</p>
+              </div>
+            </div>
+            <!-- Gírgolas Reinas Blancas -->
+            <div class="border border-green-200 rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div class="h-64 overflow-hidden">
+                <img src="images/white_girgola.jpg" alt="Gírgolas Reinas Blancas" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+              </div>
+              <div class="p-6">
+                <h5 class="text-green-900 font-bold mb-1">Gírgolas Reinas Blancas</h5>
+                <p class="text-sm text-green-600 mb-2 italic">Pleurotus eryngii</p>
+                <p class="text-gray-700">Elegantes y de sabor suave, perfectas para platos gourmet. Textura firme y carnosa.</p>
+              </div>
+            </div>
+            <!-- Gírgolas Reinas Negras -->
+            <div class="border border-green-200 rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div class="h-64 overflow-hidden">
+                <img src="images/black_girgola.jpg" alt="Gírgolas Reinas Negras" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+              </div>
+              <div class="p-6">
+                <h5 class="text-green-900 font-bold mb-1">Gírgolas Reinas Negras</h5>
+                <p class="text-sm text-green-600 mb-2 italic">Pleurotus ostreatus var. columbinus</p>
+                <p class="text-gray-700">Color intenso y sabor pronunciado, ideales para realzar tus recetas. Proteína libre de grasas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Kits y Conservas -->
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Kit de Autocultivo -->
+          <div class="border border-green-200 rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all">
+            <div class="h-64 overflow-hidden">
+              <!-- Reuse the grey gírgola as a visual representation for the kit.  You can replace this with a proper kit image if available. -->
+              <img src="images/gray_girgola.jpg" alt="Kit de Autocultivo" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+            </div>
+            <div class="p-6">
+              <i class="fa-solid fa-box-open text-green-700 text-3xl mb-4"></i>
+              <h5 class="text-green-900 font-bold mb-2">Kits de Autocultivo</h5>
+              <p class="text-gray-700 mb-4">Cosecha tus propios hongos en casa. Incluye bolsas de cultivo, chip de pecán, semilla miceliada e instrucciones detalladas.</p>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Fácil de usar</li>
+                <li>100% natural</li>
+                <li>Cosecha en 2‑3 semanas</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Conservas Artesanales -->
+          <div class="border border-green-200 rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all">
+            <div class="h-64 overflow-hidden">
+              <!-- Reuse the black gírgola image as placeholder for conservas. -->
+              <img src="images/black_girgola.jpg" alt="Conservas Artesanales" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+            </div>
+            <div class="p-6">
+              <i class="fa-solid fa-heart text-green-700 text-3xl mb-4"></i>
+              <h5 class="text-green-900 font-bold mb-2">Conservas Artesanales</h5>
+              <p class="text-gray-700 mb-4">Elaboradas bajo las regulaciones del Código Alimentario Argentino, SENASA y bromatologías locales.</p>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Escabeches de Hongos</li>
+                <li>Paté de Hongos</li>
+                <li>100% artesanal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h3 class="text-4xl font-bold text-green-900 mb-4">Nuestros Servicios</h3>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+            Compartimos nuestro conocimiento y experiencia para fomentar la producción sostenible de hongos.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Capacitaciones y Cursos -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-book-open text-green-700 text-4xl mb-4"></i>
+              <h5 class="text-green-900 font-bold mb-2">Capacitaciones y Cursos</h5>
+              <p class="text-gray-700 mb-4 text-center">Dirigidos a futuros productores y hobbistas, cubriendo desde los fundamentos hasta técnicas avanzadas de cultivo.</p>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Cultivo básico de hongos</li>
+                <li>Técnicas avanzadas</li>
+                <li>Gestión de producción</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Asesoramiento Integral -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-users text-green-700 text-4xl mb-4"></i>
+              <h5 class="text-green-900 font-bold mb-2">Asesoramiento Integral</h5>
+              <p class="text-gray-700 mb-4 text-center">Guía personalizada en todas las etapas del proceso productivo, desde la selección de sustratos hasta la comercialización.</p>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Consultoría técnica</li>
+                <li>Optimización de procesos</li>
+                <li>Estrategias de venta</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Servicios de Ingeniería -->
+          <div class="border border-green-200 rounded-lg p-6 hover:shadow-xl transition-shadow bg-white">
+            <div class="flex flex-col items-center">
+              <i class="fa-solid fa-screwdriver-wrench text-green-700 text-4xl mb-4"></i>
+              <h5 class="text-green-900 font-bold mb-2">Servicios de Ingeniería</h5>
+              <p class="text-gray-700 mb-4 text-center">Diseño y optimización de espacios físicos para la producción de hongos.</p>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Salas de pasteurizado</li>
+                <li>Salas de incubación</li>
+                <li>Salas de fructificación</li>
+                <li>Salas de poscosecha</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Insumos para Producción -->
+        <div class="mt-16">
+          <div class="border border-green-200 rounded-lg p-8 bg-gradient-to-br from-green-50 to-amber-50">
+            <div class="text-center mb-8">
+              <i class="fa-solid fa-box-open text-green-700 text-5xl mb-4"></i>
+              <h4 class="text-3xl text-green-900 font-bold mb-2">Insumos para Producción</h4>
+              <p class="text-lg text-green-800">Todo lo necesario para producir hongos de calidad</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center">
+                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+                  <h5 class="font-bold text-green-900 mb-2">Bolsas de Cultivo</h5>
+                  <p class="text-gray-700 text-sm">Con filtro de alta calidad</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+                  <h5 class="font-bold text-green-900 mb-2">Chip de Pecán</h5>
+                  <p class="text-gray-700 text-sm">Sustrato local y sostenible</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+                  <h5 class="font-bold text-green-900 mb-2">Semilla Miceliada</h5>
+                  <p class="text-gray-700 text-sm">Cepas certificadas</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+                  <h5 class="font-bold text-green-900 mb-2">Y mucho más</h5>
+                  <p class="text-gray-700 text-sm">Consulta por otros insumos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proceso Productivo -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-amber-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h3 class="text-4xl font-bold text-green-900 mb-4">Nuestro Proceso Agroecológico</h3>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+            Cada etapa del proceso se realiza con una perspectiva agroecológica, priorizando el cuidado del medio ambiente.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Paso 1 -->
+          <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-700">1</span>
+            </div>
+            <h5 class="font-bold text-green-900 text-center mb-3">Selección de Sustrato</h5>
+            <p class="text-gray-700 text-sm text-center">Chipeado de poda de pecán, valorización de subproductos locales.</p>
+          </div>
+          <!-- Paso 2 -->
+          <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-700">2</span>
+            </div>
+            <h5 class="font-bold text-green-900 text-center mb-3">Pasteurización</h5>
+            <p class="text-gray-700 text-sm text-center">Tratamiento térmico controlado, sin químicos ni agroquímicos.</p>
+          </div>
+          <!-- Paso 3 -->
+          <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-700">3</span>
+            </div>
+            <h5 class="font-bold text-green-900 text-center mb-3">Inoculación e Incubación</h5>
+            <p class="text-gray-700 text-sm text-center">Crecimiento del micelio en condiciones ambientales óptimas.</p>
+          </div>
+          <!-- Paso 4 -->
+          <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-green-700">4</span>
+            </div>
+            <h5 class="font-bold text-green-900 text-center mb-3">Fructificación y Cosecha</h5>
+            <p class="text-gray-700 text-sm text-center">Hongos frescos, cosechados en el momento óptimo de madurez.</p>
+          </div>
+        </div>
+        <!-- Compromiso Agroecológico -->
+        <div class="mt-12 text-center">
+          <div class="bg-white rounded-lg p-8 shadow-xl max-w-3xl mx-auto">
+            <i class="fa-solid fa-award text-green-700 text-4xl mx-auto mb-4"></i>
+            <h4 class="text-2xl font-bold text-green-900 mb-4">Compromiso Agroecológico</h4>
+            <p class="text-gray-700 text-lg">
+              En ninguna etapa del proceso utilizamos agroquímicos. Los residuos de la producción son excelentes para enriquecer el compost,
+              cerrando el ciclo de manera sostenible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nosotros -->
+    <section id="nosotros" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h3 class="text-4xl font-bold text-green-900 mb-6">Nuestra Historia</h3>
+          <div class="flex justify-center gap-4 mb-8">
+            <i class="fa-solid fa-leaf text-green-700 text-3xl"></i>
+            <i class="fa-solid fa-seedling text-green-700 text-3xl"></i>
+            <i class="fa-solid fa-heart text-green-700 text-3xl"></i>
+          </div>
+          <p class="text-xl text-gray-700 mb-6 leading-relaxed">
+            Somos dos ingenieros – uno mecánico y otro agrónomo – que se asociaron para producir hongos comestibles con materias primas locales
+            y una fuerte impronta de reutilización de subproductos para reducir el impacto ambiental.
+          </p>
+          <p class="text-xl text-gray-700 mb-6 leading-relaxed">
+            Nuestro principal insumo es el chipeado de la poda del monte de nueces de pecán del campo donde armamos una salita para fructificar.
+            La propuesta es producir alimentos saludables con identidad local para venderlos directamente a consumidores conscientes y a proyectos
+            gastronómicos de la región.
+          </p>
+          <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+            Nuestro proyecto es un reflejo de la innovación y el respeto por la naturaleza. Creemos en la producción de alimentos que nutren
+            el cuerpo y el alma, con un impacto positivo en la comunidad y el planeta.
+          </p>
+          <div class="grid md:grid-cols-3 gap-6 mt-12">
+            <div class="bg-green-50 rounded-lg p-6">
+              <i class="fa-solid fa-map-marker-alt text-green-700 text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold text-green-900 mb-2">Ubicación</h5>
+              <p class="text-gray-700">Poblet, Partido de La Plata, Provincia de Buenos Aires</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-6">
+              <i class="fa-solid fa-users text-green-700 text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold text-green-900 mb-2">Equipo</h5>
+              <p class="text-gray-700">Ingeniero Mecánico e Ingeniero Agrónomo</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-6">
+              <i class="fa-solid fa-seedling text-green-700 text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold text-green-900 mb-2">Filosofía</h5>
+              <p class="text-gray-700">Agroecología, sostenibilidad e identidad local</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="py-20 bg-gradient-to-br from-green-900 to-green-700 text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h3 class="text-4xl font-bold mb-6">¡Únete a la Experiencia Pobletus!</h3>
+          <p class="text-xl mb-8">
+            Contáctanos para realizar tus pedidos de hongos frescos, kits productivos, conservas o para informarte sobre nuestros cursos y servicios de asesoramiento.
+          </p>
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <!-- Email -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-colors">
+              <i class="fa-solid fa-envelope text-white text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold mb-2">Email</h5>
+              <!-- Updated contact email as requested by the user -->
+              <p class="text-sm"><a href="mailto:pobletus@gmail.com" class="underline">pobletus@gmail.com</a></p>
+            </div>
+            <!-- Teléfono (WhatsApp) -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-colors">
+              <i class="fa-solid fa-phone text-white text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold mb-2">Teléfono / WhatsApp</h5>
+              <!-- Updated phone number as requested; using tel: link for WhatsApp convenience -->
+              <p class="text-sm"><a href="https://wa.me/541122798768" class="underline">+54 11 2279 8768</a></p>
+            </div>
+            <!-- Instagram -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-colors">
+              <i class="fa-brands fa-instagram text-white text-3xl mx-auto mb-3"></i>
+              <h5 class="font-bold mb-2">Instagram</h5>
+              <!-- Added Instagram handle as requested -->
+              <p class="text-sm"><a href="https://instagram.com/hongos.pobletus" class="underline" target="_blank" rel="noopener">@hongos.pobletus</a></p>
+            </div>
+          </div>
+          <a href="mailto:pobletus@gmail.com" class="bg-white text-green-900 hover:bg-gray-100 font-semibold text-lg px-8 py-4 rounded-lg transition-colors">Enviar Mensaje</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-950 text-white py-8">
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <i class="fa-solid fa-leaf"></i>
+          <span class="text-xl font-bold">Pobletus</span>
+        </div>
+        <p class="text-green-300 mb-4">Hongos Agroecológicos ‒ Del campo a tu mesa, con conciencia y sabor</p>
+        <p class="text-green-400 text-sm">© 2025 Pobletus. Todos los derechos reservados. | Marca en proceso de registro ante el INPI</p>
+      </div>
+    </footer>
+  </body>
+</html>
